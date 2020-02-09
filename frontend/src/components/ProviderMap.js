@@ -107,9 +107,13 @@ export default class ProviderMap extends Component {
 
 const ProviderPopup = (props) => {
     return (
-        <Popup> {props.provider.facility_name} <br /> 
-                {props.provider.street_number + " " + props.provider.street_name} <br/>
-                {props.provider.program_type}
+        <Popup> <strong>{props.provider.facility_name} </strong> <br /> 
+                <em>{props.provider.street_number + " " + props.provider.street_name + ", " + props.provider.city + ", " + props.provider.state + ", " + props.provider.zip_code} </em> <br/>
+                <p> Type of Program: {props.provider.program_type}</p>
+                <p> Phone Number: {props.provider.phone_number}</p>
+                <p> Status: {props.provider.facility_status}</p>
+                <p> Capacity: {props.provider.capacity_description} </p>
+                {props.additional_information && props.additional_information.url && <a href={props.additional_information.url}> View Site</a>}
         </Popup>
     );
 };

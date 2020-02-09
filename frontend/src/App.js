@@ -51,8 +51,7 @@ export default class App extends Component{
       region:"RRO",
       location: [43.0845, -77.6749],
       name: "Rochester Regional Office",
-      keyopen:false,
-      formopen:true
+      keyopen:false
     }
     // Initialize the App Client
     this.state.client = Stitch.initializeDefaultAppClient("brickcare-vkcbv");
@@ -83,7 +82,7 @@ export default class App extends Component{
       .loginWithCredential(new AnonymousCredential())
       .then( () => {
         this.state.client.callFunction("getSocrataData", [this.state.region]).then(result => {
-          //console.log(result)
+          console.log(result)
           let providers = []
           result.forEach(place => {
             providers.push(place); 
