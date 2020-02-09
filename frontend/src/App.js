@@ -20,7 +20,7 @@ export default class App extends Component{
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem><Link to="/projects">Projects</Link></DropdownItem>
-            <DropdownItem><Link to="/contact">Contact Info</Link></DropdownItem>
+            <DropdownItem><Link to="/contact">Login/Sign Up</Link></DropdownItem>
           </DropdownMenu>
         </UncontrolledButtonDropdown>
         <Main/>
