@@ -74,7 +74,7 @@ export default class ProviderMap extends Component {
     }
 
     componentDidMount(){
-        
+
     }
 
     getIcon = (type, status) => {
@@ -85,7 +85,7 @@ export default class ProviderMap extends Component {
             return (icons[type] ? icons[type] : icons['default']);
         }
     }
-  
+
     render(){
       return (
         <Map id="map" center={this.state.position} zoom={13}>
@@ -95,13 +95,13 @@ export default class ProviderMap extends Component {
           />
           {this.props.providers.filter( (provider) => {
             return provider.latitude && provider.longitude;
-          }).map( (provider, key) => 
+          }).map( (provider, key) =>
             <Marker key ={key} icon = { this.getIcon(provider.program_type, provider.facility_status) } position={[provider.latitude, provider.longitude]}>
-              <ProviderPopup provider = {provider} /> 
+              <ProviderPopup provider = {provider} />
             </Marker>
           )
           }
-          
+
         </Map>
       );
     }
@@ -110,9 +110,11 @@ export default class ProviderMap extends Component {
 
 const ProviderPopup = (props) => {
     return (
-        <Popup> {props.provider.facility_name} <br /> 
-                {props.provider.street_number + " " + props.provider.street_name} <br/>
-                {props.provider.program_type}
+        <Popup> {props.provider.facility_name} <br />
+                {"Address: " + props.provider.street_number + " " + props.provider.street_name} <br/>
+              {"Program Type: " + props.provider.program_type} <br/>
+            {"Contact: " + props.provider.provider_name + ", " + props.provider.phone_number}<br/>
+          {<a href={props.provider.additional_information.url}>More Info</a>}
         </Popup>
     );
 };

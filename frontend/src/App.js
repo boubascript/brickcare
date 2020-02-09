@@ -33,18 +33,21 @@ export default class App extends Component{
       "brick-atlas"
     );
     // Get a reference to the todo database
-    this.db = mongodb.db("brickcaredb");
+    /*this.db = mongodb.db("brickcaredb");
     this.db.collection("providers").find({}).asArray().then((err, result) => {
       if (err) throw err;
       console.log(result);
       return result;
-    });
-
+    });*/
+    this.state.client.auth
+      .loginWithCredential(new AnonymousCredential())
+      .then(this.displayTodos)
+      .catch(console.error);
     this.state.client.callFunction("getSocrataData", []).then(result => {
       console.log(result)
       let providers = []
       result.forEach(place => {
-        providers.push(place); 
+        providers.push(place);
        //  {
        //    "position": [parseFloat(place.latitude), parseFloat(place.longitude)],
        //    "facility_name": place.facility_name,
@@ -71,7 +74,7 @@ export default class App extends Component{
             <DropdownItem><Link to="/profile">My Profile</Link></DropdownItem>
           </DropdownMenu>
         </UncontrolledButtonDropdown>
-        <Button style={{float: 'right'}}><Link to="/contact">Login/Sign Up</Link></Button>
+        <Button style={{float: 'right'}}><Link to="/contact" className="link">Login/Sign Up</Link></Button>
         <Main/>
         <ProviderMap providers={this.state.providers} filters = {this.state.filters}/>
       </div>
