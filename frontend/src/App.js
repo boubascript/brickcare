@@ -1,30 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Collapse, Button, CardBody, Card } from 'reactstrap';
 import {
   Stitch,
   AnonymousCredential,
   RemoteMongoClient
 } from "mongodb-stitch-browser-sdk";
-
-import logo from './logo.svg';
 import './App.css';
 
-export default function App() {
+export default App = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Button outline color="primary">Toggle</Button>{' '} 
+
+      <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>More</Button>
+      <Collapse isOpen={isOpen}>
+        <Card>
+          <CardBody>
+            <Button >Login</Button>{' '}
+            <Button >Community</Button>{' '}
+            <Button >Events</Button>
+          </CardBody>
+        </Card>
+      </Collapse>
     </div>
   );
-}
+};
