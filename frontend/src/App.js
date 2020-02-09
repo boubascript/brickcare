@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { Collapse, Button, CardBody, Card } from 'reactstrap';
+import React, {Component} from 'react';
+import { UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
+import Main from './components/main';
+import {Link} from 'react-router-dom';
 import {
   Stitch,
   AnonymousCredential,
@@ -7,24 +9,40 @@ import {
 } from "mongodb-stitch-browser-sdk";
 import './App.css';
 
-export default function App (props) {
-  const [isOpen, setIsOpen] = useState(false);
+export default class App extends Component{
 
-  const toggle = () => setIsOpen(!isOpen);
-  return (
-    <div>
-      <Button outline color="primary">Toggle</Button>{' '} 
+  componentDidMount() {
+    // Initialize the App Client
+    this.client = Stitch.initializeDefaultAppClient("brickcare-vkcbv");
+    // Get a MongoDB Service Client
+    // This is used for logging in and communicating with Stitch
+    const mongodb = this.client.getServiceClient(
+      RemoteMongoClient.factory,
+      "brick-atlas"
+    );
+    // Get a reference to the todo database
+    this.db = mongodb.db("brickcaredb");
+    this.db.collection("providers").find({}).asArray().then((err, result) => {
+      if (err) throw err;
+      console.log(result);
+      return result;
+    });
+  }
 
-      <Button color="primary" onClick={toggle}>More</Button>
-      <Collapse isOpen={isOpen}>
-        <Card>
-          <CardBody>
-            <Button >Login</Button>{' '}
-            <Button >Community</Button>{' '}
-            <Button >Events</Button>
-          </CardBody>
-        </Card>
-      </Collapse>
-    </div>
-  );
+  render(){
+    return(
+      <div style={{height: '300px', position: 'relative'}}>
+        <UncontrolledButtonDropdown>
+          <DropdownToggle caret>
+            Dropdown
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem><Link to="/projects">Projects</Link></DropdownItem>
+            <DropdownItem><Link to="/contact">Contact Info</Link></DropdownItem>
+          </DropdownMenu>
+        </UncontrolledButtonDropdown>
+        <Main/>
+      </div>
+    );
+  }
 };
