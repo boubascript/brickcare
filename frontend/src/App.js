@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle, Button } from 'reactstrap';
+import { UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle, Button,
+          Form, FormGroup, Badge, Input } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import {
   Stitch,
@@ -11,16 +12,49 @@ import Main from './components/Main.js';
 import ProviderMap from './components/ProviderMap';
 import './App.css';
 
+const regions = ["ARO",  "BRO",  "LIRO", "RRO",  "SRO",  "YRO"];
+
+const regionInfo = {
+  "ARO": {
+    "name" : "Albany Regional Office",
+    "location": [42.6526,-73.7562]
+  },
+  "BRO" : {
+    "name" : "Buffalo Regional Office",
+    "location": [42.8864,-78.8784]
+  },
+  "LIRO" : {
+    "name" : " Long Island Regional Office",
+    "location": [40.7891,-73.1350]
+  },
+  "RRO" : {
+    "name" : "Rochester Regional Office",
+    "location": [43.0845, -77.6749]
+  },
+  "SRO" : {
+    "name" : "Syracuse Regional Office",
+    "location": [43.0481,-76.1474]
+  },
+  "YRO" : {
+    "name" : "Spring Valley Regional Office",
+    "location": [41.1132,-74.0438]
+  }
+}
 
 export default class App extends Component{
   constructor(props) {
     super(props);
     this.state = {
       filters: [],
-      providers: []
+      providers: [],
+      region:"RRO",
+      location: [43.0845, -77.6749],
+      name: "Rochester Regional Office"
     }
     // Initialize the App Client
     this.state.client = Stitch.initializeDefaultAppClient("brickcare-vkcbv");
+
+    this.onRegionChange = this.onRegionChange.bind(this);
 
   }
 
@@ -40,40 +74,84 @@ export default class App extends Component{
       return result;
     });
 
-    this.state.client.callFunction("getSocrataData", []).then(result => {
-      console.log(result)
-      let providers = []
-      result.forEach(place => {
-        providers.push(place); 
-       //  {
-       //    "position": [parseFloat(place.latitude), parseFloat(place.longitude)],
-       //    "facility_name": place.facility_name,
-       //    "street_number": place.street_number,
-       //    "street_name": place.street_name,
-       //  });
+    this.state.client.auth
+      .loginWithCredential(new AnonymousCredential())
+      .then( () => {
+        this.state.client.callFunction("getSocrataData", [this.state.region]).then(result => {
+          console.log(result)
+          let providers = []
+          result.forEach(place => {
+            providers.push(place); 
+           });
+           this.setState({
+            providers: providers
+          })
        });
-       this.setState({
-        providers: providers
       })
-   });
+      .catch(console.error);
+
   }
 
+  componentDidUpdate(){
+    if(this.state.update){
+      this.state.client.callFunction("getSocrataData", [this.state.region]).then(result => {
+        console.log(result)
+        let providers = []
+        result.forEach(place => {
+          providers.push(place); 
+         });
+         this.setState({
+          providers: providers,
+          update:false,
+          location: regionInfo[this.state.region].location,
+          name: regionInfo[this.state.region].name,
+          region:""
+        })
+     });
+    }
+  }
+
+  onRegionChange = (event) => {
+    event.preventDefault();
+    console.log(event)
+
+    this.setState({
+      region: event.target.value
+    })
+
+    if(regions.includes(event.target.value)){
+      this.setState({update:true})
+    }
+  }
 
   render(){
     return(
-      <div style={{height: '300px', position: 'relative'}}>
-        <UncontrolledButtonDropdown>
-          <DropdownToggle caret>
-            Dropdown
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem><Link to="/projects">Projects</Link></DropdownItem>
-            <DropdownItem><Link to="/profile">My Profile</Link></DropdownItem>
-          </DropdownMenu>
-        </UncontrolledButtonDropdown>
-        <Button style={{float: 'right'}}><Link to="/contact">Login/Sign Up</Link></Button>
-        <Main/>
-        <ProviderMap providers={this.state.providers} filters = {this.state.filters}/>
+      <div className="App" style={{position: 'relative'}}>
+        <ProviderMap providers={this.state.providers} filters = {this.state.filters} location = {this.state.location}/>
+        <div className="overlay">
+          <div className="menu">
+          <label>
+          <h3> <Badge color="secondary">Choose Region:</Badge></h3>
+          <h4><Badge color="primary">{this.state.name}</Badge></h4>
+          <Input id = "regionInput" list="data" value={this.state.region} placeholder="Choose Region: Rochester Regional Office (RRO)" onChange={this.onRegionChange} />
+          </label>
+            <datalist id="data">
+              {regions.map((item, key) =>
+                <option key={key} value={item}> {regionInfo[item].name} </option>
+              )}
+            </datalist>
+          </div>
+          <div className="loginmenu">
+            <UncontrolledButtonDropdown>
+                <DropdownToggle caret>
+                  Sign Up
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem><Link to="/projects">Already a member? Sign In</Link></DropdownItem>
+                </DropdownMenu>
+              </UncontrolledButtonDropdown>
+          </div>
+        </div>
       </div>
     );
   }

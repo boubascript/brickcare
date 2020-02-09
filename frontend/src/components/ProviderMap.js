@@ -63,8 +63,6 @@ const icons = {
 }
 
 
-
-
 export default class ProviderMap extends Component {
     constructor(props) {
       super(props);
@@ -88,7 +86,7 @@ export default class ProviderMap extends Component {
   
     render(){
       return (
-        <Map id="map" center={this.state.position} zoom={13}>
+        <Map id="map" center={this.props.location} zoom={13}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
