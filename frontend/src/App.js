@@ -7,7 +7,7 @@ import {
 } from "mongodb-stitch-browser-sdk";
 import './App.css';
 
-export default App = (props) => {
+export default function App (props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -15,7 +15,7 @@ export default App = (props) => {
     <div>
       <Button outline color="primary">Toggle</Button>{' '} 
 
-      <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>More</Button>
+      <Button color="primary" onClick={toggle}>More</Button>
       <Collapse isOpen={isOpen}>
         <Card>
           <CardBody>
