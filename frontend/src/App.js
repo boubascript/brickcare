@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
-import Main from './components/main';
+import Main from './components/Main';
 import {Link} from 'react-router-dom';
 import {
   Stitch,
