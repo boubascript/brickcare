@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import L from 'leaflet';
 
-
 const icons = {
     'FDC' : new L.Icon({
                 iconUrl: 'fdc.png',

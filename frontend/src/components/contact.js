@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 const Login = (props) => {
   return (
-    <Form inline>
+    <Form>
       <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
         <Label for="exampleName" className="mr-sm-2">Name: </Label>
         <Input type="name" name="name" id="exampleName" placeholder="First, Last" />

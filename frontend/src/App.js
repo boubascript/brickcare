@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle, Button,
+import {  Dropdown, DropdownMenu, DropdownToggle, Button,
           Form, FormGroup, Badge, Input, Card, CardImg, CardText, CardBody,
-          CardTitle, CardSubtitle} from 'reactstrap';
+          CardTitle, CardSubtitle, Label} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import {
   Stitch,
@@ -50,12 +50,16 @@ export default class App extends Component{
       providers: [],
       region:"RRO",
       location: [43.0845, -77.6749],
-      name: "Rochester Regional Office"
+      name: "Rochester Regional Office",
+      keyopen:false,
+      formopen:true
     }
     // Initialize the App Client
     this.state.client = Stitch.initializeDefaultAppClient("brickcare-vkcbv");
 
     this.onRegionChange = this.onRegionChange.bind(this);
+    this.keytoggle = this.keytoggle.bind(this);
+    this.formtoggle = this.formtoggle.bind(this);
 
   }
 
@@ -71,7 +75,7 @@ export default class App extends Component{
     this.db = mongodb.db("brickcaredb");
     this.db.collection("providers").find({}).asArray().then((err, result) => {
       if (err) throw err;
-      console.log(result);
+      //console.log(result);
       return result;
     });
 
@@ -79,7 +83,7 @@ export default class App extends Component{
       .loginWithCredential(new AnonymousCredential())
       .then( () => {
         this.state.client.callFunction("getSocrataData", [this.state.region]).then(result => {
-          console.log(result)
+          //console.log(result)
           let providers = []
           result.forEach(place => {
             providers.push(place); 
@@ -125,6 +129,19 @@ export default class App extends Component{
     }
   }
 
+  keytoggle = () => {
+    this.setState({
+      keyopen: !this.state.keyopen
+    });
+  }
+
+  formtoggle = () => {
+    this.setState({
+      formopen: !this.state.formopen
+    });
+  }
+
+
   render(){
     return(
       <div className="App" style={{position: 'relative'}}>
@@ -142,26 +159,54 @@ export default class App extends Component{
               )}
             </datalist>
           </div>
+
           <div className="loginmenu">
-            <UncontrolledButtonDropdown>
+          <Dropdown isOpen={this.state.formopen} toggle={this.formtoggle}>
                 <DropdownToggle caret>
                   Sign Up
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem><Link to="/projects">Already a member? Sign In</Link></DropdownItem>
+                  <Form className="loginform">
+                    <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                      <Label for="exampleName" className="mr-sm-2">Name: </Label>
+                      <Input type="name" name="name" id="exampleName" placeholder="First, Last" />
+                    </FormGroup>
+                    <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                      <Label for="exampleEmail" className="mr-sm-2">Email:</Label>
+                      <Input type="email" name="email" id="exampleEmail" placeholder="example@gmail.com" />
+                    </FormGroup>
+                    <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                      <Label for="examplePassword" className="mr-sm-2">Password:</Label>
+                      <Input type="password" name="password" id="examplePassword" placeholder="password" />
+                    </FormGroup>
+                    <Button>Submit</Button>
+                  </Form>
                 </DropdownMenu>
-              </UncontrolledButtonDropdown>
+          </Dropdown>
           </div>
           <div className="imagekey">
-            <Card>
-              <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
-              <CardBody>
-                <CardTitle>Card title</CardTitle>
-                <CardSubtitle>Card subtitle</CardSubtitle>
-                <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                <Button>Button</Button>
-              </CardBody>
-            </Card>
+
+          <Dropdown  isOpen={this.state.keyopen} toggle={this.keytoggle}>
+            <DropdownToggle caret>
+              Key
+              </DropdownToggle>
+              <DropdownMenu>
+                  <Card className="keycard">
+                      <CardBody>
+                        <CardTitle>Key</CardTitle>
+                        <CardSubtitle > <a href="https://dev.socrata.com/foundry/data.ny.gov/cb42-qumz">What Each Type of Pin Means</a> </CardSubtitle>
+                        <CardText> <img src = "fdc.png" /> Family Day Care (FDC)</CardText>
+                        <CardText> <img src = "https://lh3.googleusercontent.com/proxy/0iYXZoCU640a_uYyCdlmaFMjgIkf1iRFA8yPqCAQxYlR4pn0Lv09oHzKa4cYqmft02kFtctFERc29JLQ8x7W6KFbX3SSh7I" /> 
+                              Group Family Day Care (GFDC)
+                        </CardText>
+                        <CardText> <img src = "https://i.ya-webdesign.com/images/daycare-clipart-1.png" /> School Age Child Care (SACC) </CardText>
+                        <CardText> <img src = "dcc.png" /> Day Care Center  (DCC)* </CardText>
+                        <CardText> *A smaller version of this image denotes an SDCC: Small Day Care Center </CardText>
+
+                      </CardBody>
+                    </Card>
+              </DropdownMenu>
+            </Dropdown>
           </div>
         </div>
       </div>

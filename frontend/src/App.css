@@ -31,8 +31,21 @@
   right: 5%;
 }
 
+.loginform {
+  padding: 2em;
+}
 .imagekey {
+  right: 5%;
+  width: 35%;
+}
 
+.keycard {
+  text-align: center;
+}
+
+.imagekey img {
+  width: 3em;
+  height:auto;
 }
 
 #regionInput {
