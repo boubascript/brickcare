@@ -20,6 +20,7 @@ class App extends Component{
            <DropdownItem><Link to="/contact">Contact Info</Link></DropdownItem>
          </DropdownMenu>
        </UncontrolledButtonDropdown>
+       <Main/>
     </div>
 
 
