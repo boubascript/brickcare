@@ -11,24 +11,6 @@ import './App.css';
 
 export default class App extends Component{
 
-  componentDidMount() {
-    // Initialize the App Client
-    this.client = Stitch.initializeDefaultAppClient("brickcare-vkcbv");
-    // Get a MongoDB Service Client
-    // This is used for logging in and communicating with Stitch
-    const mongodb = this.client.getServiceClient(
-      RemoteMongoClient.factory,
-      "brick-atlas"
-    );
-    // Get a reference to the todo database
-    this.db = mongodb.db("brickcaredb");
-    this.db.collection("providers").find({}).asArray().then((err, result) => {
-      if (err) throw err;
-      console.log(result);
-      return result;
-    });
-  }
-
   render(){
     return(
       <div style={{height: '300px', position: 'relative'}}>
