@@ -1,30 +1,25 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle, Container, Row, Col  } from 'reactstrap';
-import Main from './components/main';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Collapse, Button, CardBody, Card } from 'reactstrap';
 
-class App extends Component{
-  render(){
-  return(
-    <div style={{height: '300px', position: 'relative'}}>
-      <UncontrolledButtonDropdown>
-         <DropdownToggle caret>
-           Dropdown
-         </DropdownToggle>
-         <DropdownMenu>
-           <DropdownItem><Link to="/resume">Resume</Link></DropdownItem>
-           <DropdownItem><Link to="/aboutme">About me</Link></DropdownItem>
-           <DropdownItem><Link to="/projects">Projects</Link></DropdownItem>
-           <DropdownItem><Link to="/contact">Contact Info</Link></DropdownItem>
-         </DropdownMenu>
-       </UncontrolledButtonDropdown>
+const Example = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+  return (
+    <div>
+      <Button outline color="primary">Toggle</Button>{' '} 
+
+      <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>More</Button>
+      <Collapse isOpen={isOpen}>
+        <Card>
+          <CardBody>
+            <Button >Login</Button>{' '}
+            <Button >Community</Button>{' '}
+            <Button >Events</Button>
+          </CardBody>
+        </Card>
+      </Collapse>
     </div>
-
-
-
   );
 }
-}
-export default App;
+export default Example;
