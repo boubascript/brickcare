@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-class Landing extends Component {
+
+
+export default class Home extends Component {
   render() {
     return(
       <div style={{width:'100%', margin: 'auto'}}>
@@ -7,4 +9,3 @@ class Landing extends Component {
     )
   }
 }
-export default Landing;
