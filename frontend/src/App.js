@@ -10,8 +10,8 @@ import {
 import Main from './components/Main.js';
 import ProviderMap from './components/ProviderMap';
 import './App.css';
-
-
+import ddc from './public/ddc.png';
+import fdc from './public/fdc.png';
 export default class App extends Component{
   constructor(props) {
     super(props);
@@ -44,7 +44,7 @@ export default class App extends Component{
       console.log(result)
       let providers = []
       result.forEach(place => {
-        providers.push(place); 
+        providers.push(place);
        //  {
        //    "position": [parseFloat(place.latitude), parseFloat(place.longitude)],
        //    "facility_name": place.facility_name,
@@ -68,6 +68,15 @@ export default class App extends Component{
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem><Link to="/projects">Projects</Link></DropdownItem>
+            <DropdownItem><Link to="/profile">My Profile</Link></DropdownItem>
+          </DropdownMenu>
+        </UncontrolledButtonDropdown>
+        <UncontrolledButtonDropdown>
+          <DropdownToggle caret>
+            Map Key
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem><img src={ddc}/></DropdownItem>
             <DropdownItem><Link to="/profile">My Profile</Link></DropdownItem>
           </DropdownMenu>
         </UncontrolledButtonDropdown>
