@@ -23,7 +23,7 @@ export default class App extends Component{
             <DropdownItem><Link to="/profile">My Profile</Link></DropdownItem>
           </DropdownMenu>
         </UncontrolledButtonDropdown>
-        <Button style={{float: 'right'}}><Link to="/contact">Login/Sign Up</Link></Button>
+        <Button style={{float: 'right'}}><Link to="/contact" className="link">Login/Sign Up</Link></Button>
         <Main/>
       </div>
     );
