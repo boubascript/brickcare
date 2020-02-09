@@ -22,9 +22,6 @@ class App extends Component{
        </UncontrolledButtonDropdown>
        <Main/>
     </div>
-
-
-
   );
 }
 }
