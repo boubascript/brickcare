@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
+import { UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle, Button } from 'reactstrap';
 import Main from './components/Main.js';
 import {Link} from 'react-router-dom';
 import {
@@ -20,9 +20,10 @@ export default class App extends Component{
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem><Link to="/projects">Projects</Link></DropdownItem>
-            <DropdownItem><Link to="/contact">Login/Sign Up</Link></DropdownItem>
+            <DropdownItem><Link to="/profile">My Profile</Link></DropdownItem>
           </DropdownMenu>
         </UncontrolledButtonDropdown>
+        <Button style={{float: 'right'}}><Link to="/contact">Login/Sign Up</Link></Button>
         <Main/>
       </div>
     );
