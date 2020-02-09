@@ -4,6 +4,7 @@ import Home from './Home';
 import Contact from './Contact';
 import Projects from './Projects';
 import Profile from './Profile';
+
 const Main = () => (
   <Switch>
   <Route exact path="/" component={Home}/>
