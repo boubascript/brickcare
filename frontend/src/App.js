@@ -1,8 +1,14 @@
 import React from 'react';
+import {
+  Stitch,
+  AnonymousCredential,
+  RemoteMongoClient
+} from "mongodb-stitch-browser-sdk";
+
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -22,5 +28,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
