@@ -160,7 +160,7 @@ export default class App extends Component{
           </div>
 
           <div className="loginmenu">
-          <Dropdown isOpen={this.state.formopen} toggle={this.formtoggle}>
+          <Dropdown direction="left" isOpen={this.state.formopen} toggle={this.formtoggle}>
                 <DropdownToggle caret>
                   Sign Up
                 </DropdownToggle>
@@ -185,7 +185,7 @@ export default class App extends Component{
           </div>
           <div className="imagekey">
 
-          <Dropdown  isOpen={this.state.keyopen} toggle={this.keytoggle}>
+          <Dropdown  direction="left" isOpen={this.state.keyopen} toggle={this.keytoggle}>
             <DropdownToggle caret>
               Key
               </DropdownToggle>

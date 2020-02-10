@@ -33,10 +33,11 @@
 
 .loginform {
   padding: 2em;
+  width:20em;
 }
+
 .imagekey {
-  right: 5%;
-  width: 35%;
+  right: 20%;
 }
 
 .keycard {
